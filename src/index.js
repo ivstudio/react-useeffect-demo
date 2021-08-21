@@ -23,7 +23,6 @@ function App() {
         setStatus("error");
       }
     }
-
     fetchTodos();
   }, []);
 
@@ -32,16 +31,16 @@ function App() {
   }
 
   return (
-    <div>
+    <>
       {status === "loading"
         ? "loading..."
         : todos.map((todo) => (
-            <ul key={todo.id}>
-              <li>{todo.title}</li>
-              <li>{todo.body}</li>
-            </ul>
+            <div key={todo.id}>
+              <h2>{todo.title}</h2>
+              <p>{todo.body}</p>
+            </div>
           ))}
-    </div>
+    </>
   );
 }
 
