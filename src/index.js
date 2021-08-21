@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 function App() {
-  const [dataLaunch, setDataLaunch] = useState([]);
+  const [todos, setTodos] = useState([]);
   const [status, setStatus] = useState("loading");
 
-  const url = "https://launchlibrary.net/1.2/launch/next/10";
+  const url = "https://jsonplaceholder.typicode.com/posts";
 
   useEffect(() => {
-    async function fetchLaunches() {
+    async function fetchTodos() {
       try {
         const response = await fetch(url);
 
@@ -16,15 +16,15 @@ function App() {
           throw Error(`Error status ${response.status}`);
         }
 
-        const dataLaunch = await response.json();
-        setDataLaunch(dataLaunch.launches);
+        const data = await response.json();
+        setTodos(data);
         setStatus("success");
       } catch (e) {
         setStatus("error");
       }
     }
 
-    fetchLaunches();
+    fetchTodos();
   }, []);
 
   if (status === "error") {
@@ -35,10 +35,10 @@ function App() {
     <div>
       {status === "loading"
         ? "loading..."
-        : dataLaunch.map((launch) => (
-            <ul key={launch.id}>
-              <li>{launch.location.name}</li>
-              <li>{launch.rocket.name}</li>
+        : todos.map((todo) => (
+            <ul key={todo.id}>
+              <li>{todo.title}</li>
+              <li>{todo.body}</li>
             </ul>
           ))}
     </div>
